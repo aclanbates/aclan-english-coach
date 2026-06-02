@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: "Aclan English Coach",
   description: "Personalized grammar, idiom, and pronunciation coaching app.",
   icons: {
-    apple: "/apple-touch-icon.png",
+    apple: "/aclan-english-coach/english-coach-touch-icon.png",
   },
 };
 
