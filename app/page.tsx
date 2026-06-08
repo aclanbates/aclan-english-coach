@@ -3,7 +3,10 @@ import IdiomCards from "@/components/IdiomCards";
 import GrammarCoach from "@/components/GrammarCoach";
 import WeeklyQuiz from "@/components/WeeklyQuiz";
 import ProgressChecklist from "@/components/ProgressChecklist";
-import { BookOpen, Mic, Trophy } from "lucide-react";
+import NaturalRewrite from "@/components/NaturalRewrite";
+import WeakIdiomReview from "@/components/WeakIdiomReview";
+import ChatGptButton from "@/components/ChatGptButton";
+import { BookOpen, Mic, PenLine, Trophy } from "lucide-react";
 
 export default function Home() {
   return (
@@ -17,11 +20,12 @@ export default function Home() {
             Grammar, idioms, pronunciation, and confident spoken English.
           </h1>
           <p className="mt-5 max-w-2xl text-zinc-300">
-            A personal English training dashboard for grammar, idioms, pronunciation practice,
-            self-recording, and weekly pass/fail quizzes.
+            A polished English training dashboard for a Turkish-speaking film and theater
+            director: idioms, grammar, pronunciation, natural rewrites, voice practice,
+            and weekly review.
           </p>
 
-          <div className="mt-6 grid gap-3 md:grid-cols-3">
+          <div className="mt-6 grid gap-3 md:grid-cols-4">
             <div className="rounded-2xl bg-black/25 p-4">
               <BookOpen className="mb-2" />
               <b>Daily idioms</b>
@@ -37,6 +41,11 @@ export default function Home() {
               <b>Weekly quiz</b>
               <p className="text-sm text-zinc-400">Pass the idioms you studied this week.</p>
             </div>
+            <div className="rounded-2xl bg-black/25 p-4">
+              <PenLine className="mb-2" />
+              <b>Natural rewrites</b>
+              <p className="text-sm text-zinc-400">Clean long thoughts into spoken English.</p>
+            </div>
           </div>
         </div>
 
@@ -45,9 +54,12 @@ export default function Home() {
           <VoiceRecorder />
           <IdiomCards />
           <GrammarCoach />
+          <NaturalRewrite />
           <WeeklyQuiz />
+          <WeakIdiomReview />
         </div>
       </section>
+      <ChatGptButton />
     </main>
   );
 }
