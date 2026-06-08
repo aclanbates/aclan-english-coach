@@ -3,9 +3,7 @@
 import { useEffect, useState } from "react";
 import { CheckCircle2, Repeat2 } from "lucide-react";
 import { todayIdioms } from "@/lib/quiz";
-
-const studiedKey = "aclan-next-studied-idioms";
-const weakKey = "aclan-next-weak-idioms";
+import { appendActivity, progressKeys } from "@/lib/progress";
 
 export default function IdiomCards() {
   const idioms = todayIdioms();
@@ -13,20 +11,24 @@ export default function IdiomCards() {
   const [weak, setWeak] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
-    setStudied(JSON.parse(localStorage.getItem(studiedKey) || "{}"));
-    setWeak(JSON.parse(localStorage.getItem(weakKey) || "{}"));
+    setStudied(JSON.parse(localStorage.getItem(progressKeys.studiedIdioms) || "{}"));
+    setWeak(JSON.parse(localStorage.getItem(progressKeys.weakIdioms) || "{}"));
   }, []);
 
   function toggleStudied(idiom: string) {
     const next = { ...studied, [idiom]: !studied[idiom] };
     setStudied(next);
-    localStorage.setItem(studiedKey, JSON.stringify(next));
+    localStorage.setItem(progressKeys.studiedIdioms, JSON.stringify(next));
+
+    if (next[idiom]) {
+      appendActivity({ type: "idiom-studied", title: idiom, detail: "Marked studied" });
+    }
   }
 
   function toggleWeak(idiom: string) {
     const next = { ...weak, [idiom]: !weak[idiom] };
     setWeak(next);
-    localStorage.setItem(weakKey, JSON.stringify(next));
+    localStorage.setItem(progressKeys.weakIdioms, JSON.stringify(next));
   }
 
   return (

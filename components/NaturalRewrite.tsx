@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-const rewriteKey = "aclan-next-natural-rewrite";
+import { appendActivity, progressKeys } from "@/lib/progress";
 
 export default function NaturalRewrite() {
   const [text, setText] = useState("");
 
   useEffect(() => {
-    setText(localStorage.getItem(rewriteKey) || "");
+    setText(localStorage.getItem(progressKeys.naturalRewrite) || "");
   }, []);
 
   return (
@@ -41,7 +40,12 @@ export default function NaturalRewrite() {
       <button
         className="button mt-4"
         onClick={() => {
-          localStorage.setItem(rewriteKey, text);
+          localStorage.setItem(progressKeys.naturalRewrite, text);
+          appendActivity({
+            type: "natural-rewrite",
+            title: "Natural rewrite saved",
+            detail: text.trim() ? text.trim().slice(0, 80) : "Rewrite note"
+          });
           alert("Rewrite note saved.");
         }}
       >

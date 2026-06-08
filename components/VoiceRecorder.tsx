@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Copy, Mic, RotateCcw, Square } from "lucide-react";
+import { appendActivity, progressKeys } from "@/lib/progress";
 
 const practiceSentences = [
   {
@@ -44,8 +45,6 @@ const categories = [
   "Grammar accuracy"
 ];
 
-const reportKey = "aclan-next-voice-report";
-
 function coachPrompt() {
   return `You are an advanced English pronunciation, grammar, and accent coach for a Turkish-speaking film/theater director. Give direct, supportive, practical feedback. Focus on clarity, natural spoken English, pronunciation, sentence structure, rhythm, stress, idiom usage, and Turkish-speaker-specific patterns. Avoid generic comments.
 
@@ -75,7 +74,7 @@ export default function VoiceRecorder() {
   const current = practiceSentences[selectedIndex];
 
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem(reportKey) || "{}");
+    const saved = JSON.parse(localStorage.getItem(progressKeys.voiceReport) || "{}");
     setScores(saved.scores || {});
     setReport(saved.report || null);
   }, []);
@@ -116,7 +115,7 @@ export default function VoiceRecorder() {
   function updateScore(category: string, score: number) {
     const next = { ...scores, [category]: score };
     setScores(next);
-    localStorage.setItem(reportKey, JSON.stringify({ scores: next, report }));
+    localStorage.setItem(progressKeys.voiceReport, JSON.stringify({ scores: next, report }));
   }
 
   function createReport() {
@@ -124,7 +123,13 @@ export default function VoiceRecorder() {
     const overall = Math.round((values.reduce((sum, value) => sum + value, 0) / values.length) * 10) / 10;
     const nextReport = { overall };
     setReport(nextReport);
-    localStorage.setItem(reportKey, JSON.stringify({ scores, report: nextReport }));
+    localStorage.setItem(progressKeys.voiceReport, JSON.stringify({ scores, report: nextReport }));
+    appendActivity({
+      type: "voice-report",
+      title: "Voice report created",
+      detail: "Self-scored pronunciation report",
+      score: overall
+    });
   }
 
   async function copyPrompt() {

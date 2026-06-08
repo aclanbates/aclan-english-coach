@@ -6,6 +6,8 @@ import ProgressChecklist from "@/components/ProgressChecklist";
 import NaturalRewrite from "@/components/NaturalRewrite";
 import WeakIdiomReview from "@/components/WeakIdiomReview";
 import ChatGptButton from "@/components/ChatGptButton";
+import ProgressHistory from "@/components/ProgressHistory";
+import MonthlyQuiz from "@/components/MonthlyQuiz";
 import { BookOpen, Mic, PenLine, Trophy } from "lucide-react";
 
 export default function Home() {
@@ -56,6 +58,8 @@ export default function Home() {
           <GrammarCoach />
           <NaturalRewrite />
           <WeeklyQuiz />
+          <MonthlyQuiz />
+          <ProgressHistory />
           <WeakIdiomReview />
         </div>
       </section>

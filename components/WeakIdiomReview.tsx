@@ -2,14 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { dailyIdioms } from "@/lib/idioms";
-
-const weakKey = "aclan-next-weak-idioms";
+import { progressKeys } from "@/lib/progress";
 
 export default function WeakIdiomReview() {
   const [weak, setWeak] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
-    setWeak(JSON.parse(localStorage.getItem(weakKey) || "{}"));
+    setWeak(JSON.parse(localStorage.getItem(progressKeys.weakIdioms) || "{}"));
   }, []);
 
   const weakNames = Object.keys(weak).filter((name) => weak[name]);

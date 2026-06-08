@@ -3,8 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { CheckCircle2, Eye, RotateCcw } from "lucide-react";
 import { isCloseAnswer, quizLabel, weeklyQuiz } from "@/lib/quiz";
-
-const quizKey = "aclan-next-weekly-quiz";
+import { appendActivity, progressKeys } from "@/lib/progress";
 
 type QuizResult = {
   score: number;
@@ -20,7 +19,7 @@ export default function WeeklyQuiz() {
   const [result, setResult] = useState<QuizResult | null>(null);
 
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem(quizKey) || "{}");
+    const saved = JSON.parse(localStorage.getItem(progressKeys.weeklyQuiz) || "{}");
     setAnswers(saved.answers || {});
     setRevealed(saved.revealed || false);
     setResult(saved.result || null);
@@ -28,7 +27,7 @@ export default function WeeklyQuiz() {
 
   function saveState(nextAnswers = answers, nextRevealed = revealed, nextResult = result) {
     localStorage.setItem(
-      quizKey,
+      progressKeys.weeklyQuiz,
       JSON.stringify({ answers: nextAnswers, revealed: nextRevealed, result: nextResult })
     );
   }
@@ -57,13 +56,19 @@ export default function WeeklyQuiz() {
     setResult(nextResult);
     setRevealed(true);
     saveState(answers, true, nextResult);
+    appendActivity({
+      type: "weekly-quiz",
+      title: "Weekly quiz completed",
+      detail: nextResult.label,
+      score: nextResult.score
+    });
   }
 
   function resetQuiz() {
     setAnswers({});
     setRevealed(false);
     setResult(null);
-    localStorage.removeItem(quizKey);
+    localStorage.removeItem(progressKeys.weeklyQuiz);
   }
 
   const attempted = questions.filter((_, index) => answers[index]?.trim()).length;
