@@ -8,6 +8,7 @@ import WeakIdiomReview from "@/components/WeakIdiomReview";
 import ChatGptButton from "@/components/ChatGptButton";
 import ProgressHistory from "@/components/ProgressHistory";
 import MonthlyQuiz from "@/components/MonthlyQuiz";
+import SyncSettings from "@/components/SyncSettings";
 import { BookOpen, Mic, PenLine, Trophy } from "lucide-react";
 
 export default function Home() {
@@ -52,6 +53,7 @@ export default function Home() {
         </div>
 
         <div className="grid gap-6">
+          <SyncSettings />
           <ProgressChecklist />
           <VoiceRecorder />
           <IdiomCards />
